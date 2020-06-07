@@ -1,0 +1,21 @@
+version: "3"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: flask-api-template
+    restart: always
+    command: python server.py
+    volumes:
+      - ./:app/
+    working_dir: app/
+    ports:
+      - 5000:80
+    logging:
+      options:
+        max-size: 50m
+
+  default:
+    external:
+      name: docker_network

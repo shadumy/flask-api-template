@@ -11,9 +11,13 @@ from constant import *
 def get_list():
     logger = init_logger()
     log_path = LOG_PREFIX
-    list_files = [f for f in listdir(log_path) if isfile(join(log_path, f))]
     logger.info(f'Received GET request')
-    return {'data': list_files}
+    try:
+        list_files = [f for f in listdir(log_path) if isfile(join(log_path, f))]
+        return {'data': list_files}
+    except Exception as e:
+        logger.error(f'Something wrong: {e}')
+        return {'message': f'Something wrong: {e}'}, 500
 
 
 def get_log():

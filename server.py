@@ -1,7 +1,7 @@
 from flask import Flask, request, Blueprint
 from middleware.api_auth import validate_token
 from routes.log_resources import get_list, get_log
-
+from constant import *
 
 app = Flask(__name__)
 api = Blueprint('auth_api', __name__)
@@ -18,9 +18,10 @@ def check_healthy():
 app.add_url_rule('/log', methods=['GET'], view_func=get_list)
 app.add_url_rule('/log', methods=['POST'], view_func=get_log)
 
-app.before_request_funcs = {
-    'auth_api': [validate_token]
-}
+if REQUIRED_AUTH:
+    app.before_request_funcs = {
+        'auth_api': [validate_token]
+    }
 app.register_blueprint(api)
 
 if __name__ == '__main__':

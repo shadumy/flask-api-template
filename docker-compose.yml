@@ -8,14 +8,15 @@ services:
     restart: always
     command: python server.py
     volumes:
-      - ./:app/
-    working_dir: app/
+      - ./:/app/
+    working_dir: /app/
     ports:
-      - 5000:80
+      - 5178:80
     logging:
       options:
         max-size: 50m
 
+networks:
   default:
     external:
       name: docker_network
